@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: myRoute
+          uri: http://localhost:8081/hello-world
+          predicates:
+            - Path=/hello-world
+          filters:
+            - name: RequestRateLimiter
+              args:
+                rate-limiter: "#{@myRateLimiter}"
+                key-resolver: "#{@userKeyResolver}"
+server:
+  port: 9000
